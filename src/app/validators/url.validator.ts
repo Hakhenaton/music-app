@@ -13,19 +13,9 @@ export type UrlValidatorError = Readonly<
         allowed: readonly string[]
     }
     |{
-        cause: 'cannot-fetch-resource'
-        url: URL,
-        error: Error
-    }
-    |{
         cause: 'invalid-input-type'
         actual: string
         expected: 'string'
-    }
-    |{
-        cause: 'invalid-content-type',
-        actual?: string
-        allowed: readonly string[]
     }
 >
 

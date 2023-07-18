@@ -9,8 +9,6 @@ const idsAlphabet = [
     ...[...Array(26).keys()].map(i => i + 'A'.charCodeAt(0))
 ].map(i => String.fromCharCode(i))
 
-console.log(idsAlphabet)
-
 /**
  * A service that holds and in-memory list of tracks.
  */
@@ -47,9 +45,13 @@ export class PlaylistService {
 
     /** Retirer une piste via son index */
     remove(i: number): void {
+
         const copy = [...this._playlist$.value]
         
         const [deleted] = copy.splice(i, 1)
+
+        if (this._playing$.value?.id === deleted.id)
+            this._playing$.next(null)
 
         if (deleted.type === 'local')
             URL.revokeObjectURL(deleted.url.toString())
