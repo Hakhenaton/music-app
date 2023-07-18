@@ -3,7 +3,13 @@ import { BehaviorSubject, Observable } from 'rxjs'
 import { NewTrack, Playlist, Track } from './types'
 import { DOCUMENT } from '@angular/common'
 
-const idsAlphabet = [...Array(26 + 26 + 10).keys()].map(i => i + 48).map(i => String.fromCharCode(i))
+const idsAlphabet = [
+    ...[...Array(10).keys()].map(i => i + '0'.charCodeAt(0)),
+    ...[...Array(26).keys()].map(i => i + 'a'.charCodeAt(0)),
+    ...[...Array(26).keys()].map(i => i + 'A'.charCodeAt(0))
+].map(i => String.fromCharCode(i))
+
+console.log(idsAlphabet)
 
 /**
  * A service that holds and in-memory list of tracks.
@@ -101,6 +107,6 @@ export class PlaylistService {
 
     private generateId(): string {
         return Array.from(window.crypto.getRandomValues(new Uint8Array(16)).map(i => i % idsAlphabet.length))
-            .reduce((str, char) => str + char, '')
+            .reduce((str, char) => str + idsAlphabet[char], '')
     }
 }
